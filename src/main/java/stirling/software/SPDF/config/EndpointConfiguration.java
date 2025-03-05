@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
+
 import stirling.software.SPDF.model.ApplicationProperties;
 
 @Service
@@ -96,6 +97,7 @@ public class EndpointConfiguration {
         addEndpointToGroup("PageOps", "multi-page-layout");
         addEndpointToGroup("PageOps", "scale-pages");
         addEndpointToGroup("PageOps", "adjust-contrast");
+        addEndpointToGroup("PageOps", "change-color-space");
         addEndpointToGroup("PageOps", "crop");
         addEndpointToGroup("PageOps", "auto-split-pdf");
         addEndpointToGroup("PageOps", "extract-page");
@@ -237,6 +239,7 @@ public class EndpointConfiguration {
         addEndpointToGroup("Javascript", "sign");
         addEndpointToGroup("Javascript", "compare");
         addEndpointToGroup("Javascript", "adjust-contrast");
+        addEndpointToGroup("Javascript", "change-color-space");
 
         // qpdf dependent endpoints
         addEndpointToGroup("qpdf", "compress-pdf");

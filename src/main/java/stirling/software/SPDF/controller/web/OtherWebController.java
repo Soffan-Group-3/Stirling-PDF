@@ -123,7 +123,7 @@ public class OtherWebController {
         return Arrays.stream(files)
                 .filter(file -> file.getName().endsWith(".traineddata"))
                 .map(file -> file.getName().replace(".traineddata", ""))
-                .filter(lang -> !lang.equalsIgnoreCase("osd"))
+                .filter(lang -> !"osd".equalsIgnoreCase(lang))
                 .collect(Collectors.toList());
     }
 
@@ -150,6 +150,13 @@ public class OtherWebController {
     public String contrast(Model model) {
         model.addAttribute("currentPage", "adjust-contrast");
         return "misc/adjust-contrast";
+    }
+
+    @GetMapping("/change-color-space")
+    @Hidden
+    public String changeColorspace(Model model) {
+        model.addAttribute("currentPage", "change-color-space");
+        return "misc/change-color-space";
     }
 
     @GetMapping("/repair")
