@@ -44,7 +44,7 @@ public class ChangeColorSpaceController {
             @ModelAttribute ChangeColorSpaceRequest changeColorSpaceRequest) throws IOException {
         PDDocument document = pdfDocumentFactory.load(changeColorSpaceRequest);
         PDDocument modifiedDocument =
-                changeColorSpaceService.ChangeColorSpaceImages(
+                changeColorSpaceService.changeColorSpace(
                         document, null // Change this null into a real icc-profile
                         );
 
@@ -60,7 +60,7 @@ public class ChangeColorSpaceController {
                                 .getFileInput()
                                 .getOriginalFilename()
                                 .replaceFirst("[.][^.]+$", "")
-                        + "_update_color_space.pdf";
+                        + "_updated_color_space.pdf";
 
         // Return the modified PDF as a downloadable file
         // Convert the byte array to a web response and return it
