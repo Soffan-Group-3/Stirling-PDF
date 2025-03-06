@@ -71,6 +71,28 @@ function adjustImageProperties() {
   }
 }
 
+function rgbToCmyk(r, g, b) {
+  
+  var c = 1 - r / 255;
+  var m = 1 - g / 255;
+  var y = 1 - b / 255;
+
+  
+  var k = Math.min(c, m, y);
+
+  
+  if (k === 1) {
+    return [0, 0, 0, 1];
+  }
+
+  // Convert CMY to CMYK
+  c = (c - k) / (1 - k);
+  m = (m - k) / (1 - k);
+  y = (y - k) / (1 - k);
+
+  return [c, m, y, k];
+}
+
 
 let inputFileName = '';
 async function downloadPDF() {
