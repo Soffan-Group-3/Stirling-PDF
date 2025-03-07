@@ -1,6 +1,7 @@
 package stirling.software.SPDF.utils;
 
 import java.awt.Graphics;
+import java.awt.color.ICC_ColorSpace;
 import java.awt.color.ICC_Profile;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -10,6 +11,8 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import org.apache.pdfbox.contentstream.operator.Operator;
+import org.apache.pdfbox.cos.COSFloat;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -17,11 +20,38 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import stirling.software.SPDF.service.ChangeColorSpaceService;
 
+
+
+
 public class ChangeColorSpaceTest {
+
+    @Test
+    public void testRGBtoCMYK() throws IOException{
+
+        String iccFilePath = "src/main/resources/static/Coated_Fogra39L_VIGC_300.icc";
+        ICC_Profile icc = ICC_Profile.getInstance(iccFilePath);
+        ICC_ColorSpace isc = new ICC_ColorSpace(icc);
+        
+
+        
+        List<Object> testTokens = new ArrayList<>();
+        testTokens.add(new COSFloat(1));
+        testTokens.add(new COSFloat(0));   
+        testTokens.add(new COSFloat(0));   
+        testTokens.add(Operator.getOperator("rg"));
+
+        List<Object> result = ChangeColorSpace.changeRGBtoCMYK(testTokens, isc);
+        System.out.println(result);
+
+        assertEquals(5, result.size());
+        assertEquals("k", ((Operator) result.get(4)).getName());
+
+    }
 
     @Test
     public void test_ChangeColorSpace() throws IOException{
