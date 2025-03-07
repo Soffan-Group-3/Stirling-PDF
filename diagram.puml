@@ -1,0 +1,10 @@
+@startuml
+class ChangeColorSpaceRequest {
+    - ICC_Profile iccProfile
+    - ICC_ColorSpace cmykColorSpace
+    + ChangeColorSpaceRequest()
+}
+class PDFFile {
+}
+ChangeColorSpaceRequest --|> PDFFile
+@enduml

@@ -14,7 +14,7 @@ Stirling-PDF is a web application (localy hosed) that can be used for various PD
 ## Onboarding experience
 We chose to switch projects for this assignment from the project we had in assignment 3. We made this decision mainly because of the onboarding experience. The previous project was very difficult to get running, and we spent hours trying to understand how to execute it and fix error messages that prevented compilation.
 
-This project was much more simple to get working than the last project. The documentation was extremely clear, with instuctions for both using the software and for different types of development. Step-by-step instructions were provided on which programs needed to be downloaded and how to build and run the program. It was a bit unclear for someone new to Docker that you need to build before you can use Compose (and that you needed to log in). In their user guide, they explained Compose first, followed by build, which might lead to some confusion for someone who is not familiar with Docker, but it doesn’t necessarily need to be updated in the documentation since it could be seen as basic knowledge that the user is expected to have.
+This project was much more simple to get working than the last project. The documentation was extremely clear, with instuctions for both using the software and for different types of development. Step-by-step instructions were provided on which programs needed to be downloaded and how to build and run the program. In their user guide, they explained Compose first, followed by build, which might lead to some confusion for someone who is not familiar with Docker, but it doesn’t necessarily need to be updated in the documentation since it could be seen as basic knowledge that the user is expected to have.
 
 ## Effort spent
 Below is a breakdown of the time each team member spent in different activities.
@@ -69,7 +69,7 @@ Below is a breakdown of the time each team member spent in different activities.
 7. writing code;
 8. running code?
 
-## Overview of issue(s) and work done.
+## Overview of issues and work done.
 
 ### Issue 1
 Title: "Color space changes #1249"
@@ -89,41 +89,48 @@ The bug occurs when you upload a broken PDF or a similar file (such as one with 
 
 Scope (functionality and code affected)?
 
-## Requirements for the new feature or requirements affected by functionality being refactored
+## Requirements for the new feature
 
-Optional (point 3): trace tests to requirements.
+### Functional requirements
+- Color Space Conversion: The primary requirement is to add functionality that converts PDF files from RGB color space to CMYK color space. 
+- ICC Profile Handling: The tool should support the use of ICC profiles for color conversion. The system should accept an ICC profile and apply this profile to convert the RGB images to CMYK within the PDF.
+- Image Handling: The color space conversion should be applied to image objects within the PDF. All images should be processed and converted to CMYK while maintain high quality.
+- Text and Background Conversion: The color of text and any background elements should also be converted.
+- API Integration: The new feature should be integrated with the existing PDF program as a new button. The user should be able to send a PDF file throught the program, and the program will return the modified PDF with the color space conversion applied.
+
+### Non-Functional Requirements:
+- Should be able to handle large PDF documents.
+- Error handling: ensure that issues such as missing ICC profiles, unsupported PDF formats, or invalid color values are managed with error messages.
+
 
 ## Code changes
+The code changes made to solve Issue 1 is presented below.
 
 ### Patch
 
 (copy your changes or the add git command to show them)
-
 git diff ...
 
-Optional (point 4): the patch is clean.
-
-Optional (point 5): considered for acceptance (passes all automated checks).
 
 ## Test results
 
-Overall results with link to a copy or excerpt of the logs (before/after
-refactoring).
+Add link or something to show the test results
 
-## UML class diagram and its description
+## UML class diagram
+![UML-klassdiagram](out/diagram/diagram.png)
 
-### Key changes/classes affected
-
-Optional (point 1): Architectural overview.
-
-Optional (point 2): relation to design pattern(s).
+### Key changes
+The key methods added were the following:
+- ChangeColorSpaceRequest – Uses ICC profiles.
+- ChangeColorSpaceController – Handles HTTP requests.
+- ChangeColorSpaceService – Responsible for changing the color space of images in a PDF.
+- ChangeColorSpace – Performs the color conversion.
+- PDDocument (from PDFBox) – Represents the PDF document.
+- PDImageXObject – Handles image objects within the PDF.
+- ICC_Profile and ICC_ColorSpace – Represent color profiles.
 
 ## Overall experience
 
 What are your main take-aways from this project? What did you learn?
 
 How did you grow as a team, using the Essence standard to evaluate yourself?
-
-Optional (point 6): How would you put your work in context with best software engineering practice?
-
-Optional (point 7): Is there something special you want to mention here?
