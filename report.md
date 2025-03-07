@@ -57,7 +57,7 @@ Below is a breakdown of the time each team member spent in different activities.
 5. analyzing code/output;
 6. writing documentation;
 7. writing code;
-8. running code?
+8. running codeM
 
 ### Pontus
 1. plenary discussions/meetings;
@@ -108,9 +108,38 @@ The code changes made to solve Issue 1 is presented below.
 
 ### Patch
 
-(copy your changes or the add git command to show them)
-git diff ...
+#### Issue 1
 
+Since the patch mainly implemented new classes and files, it would be easiest to look at them directly. Since everything in them are new.
+
+These can be found at: 
+- [ChangeColorSpaceRequest.java](https://github.com/Soffan-Group-3/Stirling-PDF/blob/1249-color-space-changes/src/main/java/stirling/software/SPDF/model/api/misc/ChangeColorSpaceRequest.java)
+- [ChangeColorSpaceController.java](https://github.com/Soffan-Group-3/Stirling-PDF/blob/1249-color-space-changes/src/main/java/stirling/software/SPDF/controller/api/misc/ChangeColorSpaceController.java)
+- [ChangeColorSpaceService.java](https://github.com/Soffan-Group-3/Stirling-PDF/blob/1249-color-space-changes/src/main/java/stirling/software/SPDF/service/ChangeColorSpaceService.java)
+- [ChangeColorSpace.java](https://github.com/Soffan-Group-3/Stirling-PDF/blob/1249-color-space-changes/src/main/java/stirling/software/SPDF/utils/ChangeColorSpace.java)
+- [change-color-space.html](https://github.com/Soffan-Group-3/Stirling-PDF/blob/1249-color-space-changes/src/main/resources/templates/misc/change-color-space.html)
+
+
+However, these are not the only changed we have made. There are some changes that are needed to be made in order for `Springboot`, `Thymeleaf` and the program in general to work as expected. The changes for these files are as follows:
+
+##### EndpointConfiguration.java
+![EndpointConfiguration changes](images/endpoint.PNG)
+#### OtherWebController.java
+![OtherWebController changes](images/webController.PNG)
+#### messages_en_GB.properties
+![messages_en_GB.properties changes](images/GBProperties.PNG)
+#### messages_en_US.properties
+![messages_en_US.properties changes](images/USProperties.PNG)
+#### navElements.html
+![navElements.html changes](images/navBar.PNG)
+
+There is an automatic formatter that is applied when one runs the project. This is great, since it makes all of additions follow the correct specification. However, as an unfortunate side effect this formatter sometimes makes changes to methods, whitespace and code that we have not touched. This can easily be avoided for files we have not changed by not adding them to the `commit`. However, if there is a file we have changed it becomes a little harder to notice. 
+
+
+#### Issue 2
+
+
+For issue 2 the [pull request](https://github.com/Stirling-Tools/Stirling-PDF/pull/3114) have been merged and accepted into main!
 
 ## Test results
 
@@ -120,6 +149,8 @@ Add link or something to show the test results
 ![UML-klassdiagram](out/diagram/diagram.png)
 
 ### Key changes
+
+#### Issue 1
 The key methods added were the following:
 - ChangeColorSpaceRequest – Uses ICC profiles.
 - ChangeColorSpaceController – Handles HTTP requests.
@@ -129,8 +160,20 @@ The key methods added were the following:
 - PDImageXObject – Handles image objects within the PDF.
 - ICC_Profile and ICC_ColorSpace – Represent color profiles.
 
+##### Relation to design pattern(s)
+
+During our development, we tried our best to stick to the design patterns that are already used in the project. In order to get a MVP we started with copying other files, and using their code. This automatically leads to a lot of the code sharing a lot of similarities to the already existing one. There is as stated also an automatic formatter, which when building/running the project automatically formats much of the code to be correct. This formatter seems to be quite advanced since it has multiple times changed lines of code to another (newer) version, that does the same thing. These two things make it easier to keep the new changes to the already existing design pattern.
+
+However, in this project it is in places quite obvious that it is a open source project. Naming conventions and file structures are routinely used differently in different places. In some places it is expected to have different naming conventions. For example, the Java code uses camelCase as is standard for Java, while the front-end code usually uses hyphen connected names (E.g `test-variable`). The problem in naming conventions arises when front-end variables will be used by the back-end. In this case the variables are most often written in camel case, but not always. This kind of confusion occurs at multiple places in the project, however, we have tried to keep with the most used and popular patterns.
+
+Since we added a new `feature` we have closely followed the [Developer Guide](DeveloperGuide.md). This clearly describes how to add a feature (and a new front-end for that feature) in a way that is consistent with the already existing Architecture. 
+ 
 ## Overall experience
 
 What are your main take-aways from this project? What did you learn?
 
 How did you grow as a team, using the Essence standard to evaluate yourself?
+
+
+### Our work in context
+
