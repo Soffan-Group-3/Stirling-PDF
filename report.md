@@ -154,17 +154,35 @@ The first image shows that it passed all of the Java tests, otherwise the build 
 ![Proof of tests](images/proofTests.PNG)
 
 
-This images shows that all webpage tests were passed successfully!
+These images shows that all webpage tests were passed successfully!
 ![Proof of tests](images/proofTests2.PNG)
+![Proof of tests](images/testproof3.png)
 
 ### Test case relevancy.
 
-The test cases we have added tests for the following test requirements:
+The test cases we have added tests for the following test Functional Requirements (all of them):
 
 - Color Space Conversion
 - ICC Profile Handling
 - Image Handling
 - Text and Background Conversion
+- API Integration
+
+It would maybe be more accurate to create sub-groupings out of these requirements. Since some of them can be seen as sub-requirements of others. For example, the first functional requirement would be impossible to achieve if `Image Handling`and `Text and Background Conversion` have not been fulfilled. Since as a part of converting a pdf to CMYK we have to convert all of its objects to CMYK, since a pdf is essentially only a collection of objects. This means that if we test for `Image Handling` and `Text and Background Conversion` then this requirement would be automatically be fulfilled.
+
+Furthermore, all of our tests uses ICC profiles (and actually all of our functionality) in order to convert one color to another. This means that our service in itself would not work if ICC Profile handling was not handled (and fulfilled). Therefore, we get that this requirement is fulfilled/tested by our tests (since they successfully transform colors).
+
+Now we have to show that our tests test the requirement `Image Handling`. Tests that test this can be done in multiple ways, with the easiest being to have some pre-existing images saved to disk and trying to convert them. However, in the spirit of the project this is not done to minimize the amount of files used. Instead we manually create images and add some RGB color to them. Then we insert these images into a pdf. After this we use our functions in order to convert the images in the PDF to a new PDF. At this point we iterate through the new PDF and check for all images that the resulting new image has the correct CMYK values! This will check that:
+
+1. Images are converted to correct CMYK colors 
+2. All images are properly handled
+3. That the pixel values remain unchanged and high quality.
+
+To show that our tests cover the requirement `Text and Background Conversion` is relatively simple. What the code essentially (in short) does is that it replaces all "rg" and "RG" (with their related color values) into "k" and "K" (with their related color values). Therefore, what the test does is simply construct a pdf, with known colors and RGB space. Converts these colors into CMYK with our ICC profile and methods. Then it reads through the new PDF and makes sure that all "rg" and "RG" has been replaced with "k" and "K", while the colors are accurately depicted.
+
+Lastly we have to test for the requirement `API Integration`. Half of this can be quite hard to test for automatically, since it can be a little hard to make sure that a button for example exists. However, what we can do is to automatically go to the website (check if it exists) and try to do a dummy POST request. This is easily done with `Stirling PDFs` already existing testing suite, and only a couple of lines are needed. What this does is that it makes sure that the website exists, and that it responds to POST requests in the correct way! Since the other tests (and requirements) pass, we will also know for sure that the PDF is correct. Therefore also satisfying this requirement!
+
+
 
 ## UML class diagram
 ![UML-klassdiagram](out/diagram/diagram.png)
