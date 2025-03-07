@@ -87,11 +87,11 @@ public class ChangeColorSpaceTest {
                         int[] green = {101, 112, 124};
                         int[] magenta = {60, 56, 52};
                         assertEquals(red, getRGBVals(buf_img.getRGB(0,0)));
-                        assertEquals(yellow, getRGBVals(buf_img.getRGB(1,0)));
-                        assertEquals(cyan, getRGBVals(buf_img.getRGB(2,0)));
-                        assertEquals(blue, getRGBVals(buf_img.getRGB(3,0)));
-                        assertEquals(green, getRGBVals(buf_img.getRGB(4,0)));
-                        assertEquals(magenta, getRGBVals(buf_img.getRGB(5,0)));
+                        assertEquals(green, getRGBVals(buf_img.getRGB(1,0)));
+                        assertEquals(blue, getRGBVals(buf_img.getRGB(2,0)));
+                        assertEquals(yellow, getRGBVals(buf_img.getRGB(3,0)));
+                        assertEquals(magenta, getRGBVals(buf_img.getRGB(4,0)));
+                        assertEquals(cyan, getRGBVals(buf_img.getRGB(5,0)));
                     }
                 }
             }
