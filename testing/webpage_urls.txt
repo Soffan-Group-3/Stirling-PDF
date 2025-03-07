@@ -18,6 +18,7 @@
 /sign
 /add-password
 /remove-password
+/change-color-space
 /change-permissions
 /add-watermark
 /cert-sign

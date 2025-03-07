@@ -9,6 +9,7 @@
 /auto-rename
 /auto-split-pdf
 /cert-sign
+/change-color-space
 /change-metadata
 /change-permissions
 /compare
