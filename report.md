@@ -175,6 +175,9 @@ Probably the biggest design pattern we broke, at least to our knowledge, is the 
 What are your main take-aways from this project? What did you learn?
 
 How did you grow as a team, using the Essence standard to evaluate yourself?
+Right now we are mostly in the Collaborating Stage rather than the Performing Stage because we’ve built a strong foundation open communication, and teamwork. We work well together as a unit, and everyone is aligned with the shared mission. Ideas are exchanged freely, and we support each other to get things done.
+
+However, we still have some room to improve when it comes to efficiency in order to reach the Performing Stage. At times, we find ourselves not having divided the work clearcly enough, which may lead to two people working on the same thing at once. Thus we are still working on our ability to spot and eliminate wasted effort before it happens. While these things don’t hold us back too much, however, fine-tuning these areas will help us transition into the Performing Stage, where we could work at our highest level with minimal setbacks.
 
 
 ### Critical Evaluation
