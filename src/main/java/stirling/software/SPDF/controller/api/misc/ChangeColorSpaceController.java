@@ -1,5 +1,6 @@
 package stirling.software.SPDF.controller.api.misc;
 
+import java.awt.color.ICC_Profile;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
@@ -43,9 +44,11 @@ public class ChangeColorSpaceController {
     public ResponseEntity<byte[]> updateColorSpace(
             @ModelAttribute ChangeColorSpaceRequest changeColorSpaceRequest) throws IOException {
         PDDocument document = pdfDocumentFactory.load(changeColorSpaceRequest);
+        ICC_Profile icc =
+                changeColorSpaceService.loadICCProfile(changeColorSpaceRequest.getIccProfileName());
         PDDocument modifiedDocument =
                 changeColorSpaceService.changeColorSpace(
-                        document, null // Change this null into a real icc-profile
+                        document, icc // Change this null into a real icc-profile
                         );
 
         // Create a ByteArrayOutputStream to hold the modified PDF data

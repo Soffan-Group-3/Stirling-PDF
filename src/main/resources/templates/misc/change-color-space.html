@@ -20,39 +20,28 @@
         <br><br>
         <div class="container">
           <div class="row justify-content-center">
-            <div class="col-md-12 bg-card">
-              <form th:action="@{''}">
-              <div class="row justify-content-center">
-
-                <div class="col-md-7">
+              <div class="col-md-6 bg-card">
                   <div class="tool-header">
-                    <span class="material-symbols-rounded tool-header-icon advance">palette</span>
-                    <span class="tool-header-text" th:text="#{changeColorspace.header}"></span>
+                      <span class="material-symbols-rounded tool-header-icon advance">palette</span>
+                      <span class="tool-header-text" th:text="#{changeColorspace.header}"></span>
                   </div>
-                  <div class="col-md-8">
-                    <div th:replace="~{fragments/common :: fileSelector(name='fileInput', multipleInputsForSingleRequest=false, accept='application/pdf', remoteCall='false')}"></div>
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h4 th:text="#{changeColorspace.selectText.1}"></h4>
-                            <select name="colorChangeOption" id="colorChange" class="form-control">
-                                <option value="Standard CMYK" th:text="#{changeColorspace.selectText.2}" selected></option>
-                            </select>
-                        </div>
-                    </div>
-                  </div>
-                  <br>
-                  <canvas id="contrast-pdf-canvas"></canvas>
-                  <div class="mb-3 text-left">
-                  <button id="download-button" class="btn btn-primary" th:text="#{changeColorspace.download}"></button>
-                  </div>
-                </div>
+                  <form action="#" th:action="@{'/api/v1/misc/change-color-space-pdf'}" method="post" enctype="multipart/form-data">
+                      <div
+                              th:replace="~{fragments/common :: fileSelector(name='fileInput', multipleInputsForSingleRequest=false, accept='application/pdf')}">
+                      </div>
+                      <div class="card mb-3">
+                          <div class="card-body">
+                              <h4 th:text="#{changeColorspace.selectText.1}"></h4>
+                              <select name="iccProfileName" id="iccProfileName" class="form-control">
+                                  <option value="Coated_Fogra39L_VIGC_300.icc" th:text="#{changeColorspace.selectText.2}" selected></option>
+                              </select>
+                          </div>
+                      </div>
+                      <button type="submit" id="submitBtn" class="btn btn-primary" th:text="#{changeColorspace.download}"></button>
+                  </form>
               </div>
-              </form>
-              <script type="module" th:src="@{'/pdfjs-legacy/pdf.mjs'}"></script>
-              <script type="module" th:src="@{'/js/pages/change-color-space.js'}"></script>
-            </div>
           </div>
-        </div>
+      </div>
       </div>
       <th:block th:insert="~{fragments/footer.html :: footer}"></th:block>
     </div>

@@ -2,6 +2,8 @@ package stirling.software.SPDF.service;
 
 import java.awt.color.ICC_ColorSpace;
 import java.awt.color.ICC_Profile;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -28,9 +30,24 @@ import stirling.software.SPDF.utils.ChangeColorSpace;
 @Service
 public class ChangeColorSpaceService {
 
-    public PDDocument changeColorSpace(PDDocument document, InputStream icc_profile) throws IOException{
+    public ICC_Profile loadICCProfile(String profileName)
+            throws IOException, FileNotFoundException {
+
+        // Change this to relative path for deployment
+        // Or should probably be made in a prettier way...
+        String iccFilePath = "src/main/resources/static/" + profileName;
+        ICC_Profile iccProfile = null;
+        try (InputStream iccProfileStream = new FileInputStream(iccFilePath)) {
+            iccProfile = ICC_Profile.getInstance(iccProfileStream);
+        }
+        return iccProfile;
+    }
+
+    public PDDocument changeColorSpace(PDDocument document, ICC_Profile icc_profile)
+            throws IOException {
         PDDocument pdf_with_changed_images = changeColorSpaceImages(document, icc_profile);
-        PDDocument pdf_with_changed_text = changeColorSpaceTextAndBackground(pdf_with_changed_images, icc_profile);
+        PDDocument pdf_with_changed_text =
+                changeColorSpaceTextAndBackground(pdf_with_changed_images, icc_profile);
 
         return pdf_with_changed_text;
     }
@@ -46,7 +63,7 @@ public class ChangeColorSpaceService {
      * @return The modified PDF document with updated images.
      * @throws IOException If an error occurs while processing the PDF document.
      */
-    public PDDocument changeColorSpaceImages(PDDocument document, InputStream icc_profile)
+    public PDDocument changeColorSpaceImages(PDDocument document, ICC_Profile icc_profile)
             throws IOException {
         // Iterate over each page in the PDF document
         for (PDPage page : document.getPages()) {
@@ -88,9 +105,8 @@ public class ChangeColorSpaceService {
      * @throws IOException If an error occurs while processing the PDF document.
      */
     public PDDocument changeColorSpaceTextAndBackground(
-            PDDocument document, InputStream icc_profile) throws IOException {
-        ICC_Profile ip = ICC_Profile.getInstance(icc_profile);
-        ICC_ColorSpace isc = new ICC_ColorSpace(ip);
+            PDDocument document, ICC_Profile icc_profile) throws IOException {
+        ICC_ColorSpace isc = new ICC_ColorSpace(icc_profile);
         for (PDPage page : document.getPages()) {
             PDFStreamParser parser = new PDFStreamParser(page);
             List<Object> tokens = parser.parse();
@@ -117,7 +133,7 @@ public class ChangeColorSpaceService {
 
                         // Add new color values
                         if (icc_color.length == 4) {
-                            //Four values is for CMYK
+                            // Four values is for CMYK
                             newTokens.add(new COSFloat(icc_color[0]));
                             newTokens.add(new COSFloat(icc_color[1]));
                             newTokens.add(new COSFloat(icc_color[2]));
@@ -125,7 +141,7 @@ public class ChangeColorSpaceService {
                             String newOp = "rg".equals(op.getName()) ? "k" : "K";
                             newTokens.add(Operator.getOperator(newOp));
                         } else {
-                            //Three values is for RGB
+                            // Three values is for RGB
                             newTokens.add(new COSFloat(icc_color[0]));
                             newTokens.add(new COSFloat(icc_color[1]));
                             newTokens.add(new COSFloat(icc_color[2]));
