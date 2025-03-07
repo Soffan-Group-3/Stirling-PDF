@@ -80,9 +80,10 @@ This was a requested feature to change the color space of a pdf from the current
 
 We are adding a new feature to the PDF tool that will convert PDFs from RGB to CMYK (or another color space specified by ICC profile). The scope of this may seem to be quite easy, it is only to convert from RGB to CMYK (which is quite easy). However, the hard part of the issue stems from the fact that we need to save it as a CMYK file in some ways. Javascript does not natively support this, and since we did not want to add more dependencies we had to settle for a back-end solution. 
 
+Scope (functionality and code affected)?
+
 Adding a feature requires adding multiple new classes, with all their contents, as well as adding a html site/template, updating existing references to account for the new feature and so on.
 
-Scope (functionality and code affected)?
 
 ### Issue 2
 Title: "[Bug]: Error message banner should disappear when a new file operation is performed  #2419"
