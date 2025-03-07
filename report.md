@@ -142,6 +142,8 @@ There is an automatic formatter that is applied when one runs the project. This 
 
 #### Issue 2
 
+![image](https://github.com/user-attachments/assets/d27697bb-9383-42ba-9b4f-30df0988bca3)
+
 
 For issue 2 the [pull request](https://github.com/Stirling-Tools/Stirling-PDF/pull/3114) have been merged and accepted into main!
 
