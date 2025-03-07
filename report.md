@@ -92,6 +92,7 @@ URL: https://github.com/Stirling-Tools/Stirling-PDF/issues/2419
 The bug occurs when you upload a broken PDF or a similar file (such as one with missing content). After selecting a random tool and uploading the corrupted PDF, an error will appear when the tool is run. Then, if you upload a new, correct PDF and run the tool again, the error message will still be visible. This is the issue that needs to be addressed.
 
 Scope (functionality and code affected)?
+Functionalities affected include the error banner appearing for the wrong file operations. Application would at times freeze in the event of the bug occurring. One method affected with the changes made to resolve the issue. 
 
 ## Requirements for the new feature
 
