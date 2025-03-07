@@ -23,15 +23,21 @@ import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import java.awt.color.ICC_ColorSpace;
+import stirling.software.SPDF.utils.ChangeColorSpace;
+import java.awt.color.ICC_Profile;
 
 import stirling.software.SPDF.service.ChangeColorSpaceService;
 
 import stirling.software.SPDF.service.ChangeColorSpaceService;
+
+
+
 
 public class ChangeColorSpaceTest {
 
     @Test
-    public void testRGBtoCMYK(){
+    public void testRGBtoCMYK() throws IOException{
 
         String iccFilePath = "src/main/resources/static/Coated_Fogra39L_VIGC_300.icc";
         ICC_Profile icc = ICC_Profile.getInstance(iccFilePath);
@@ -44,9 +50,6 @@ public class ChangeColorSpaceTest {
         testTokens.add(new COSFloat(0));   
         testTokens.add(new COSFloat(0));   
         testTokens.add(Operator.getOperator("rg"));
-
-
-
 
         List<Object> result = ChangeColorSpace.changeRGBtoCMYK(testTokens, isc);
         System.out.println(result);
