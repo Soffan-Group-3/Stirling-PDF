@@ -163,6 +163,12 @@ The key methods added were the following:
 - PDDocument (from PDFBox) – Represents the PDF document.
 - PDImageXObject – Handles image objects within the PDF.
 - ICC_Profile and ICC_ColorSpace – Represent color profiles.
+- 
+
+#### Issue 2
+The method changed was:
+- decryptFile(file, requiresPassword) in the src/main/resources/static/js/DecryptFiles.js.
+- Changes includes ensuring that the removeErrorBanner() is called before the await call.
 
 ##### Relation to design pattern(s)
 
