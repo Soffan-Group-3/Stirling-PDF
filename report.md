@@ -150,8 +150,21 @@ There is an automatic formatter that is applied when one runs the project. This 
 For issue 2 the [pull request](https://github.com/Stirling-Tools/Stirling-PDF/pull/3114) have been merged and accepted into main!
 
 ## Test results
+The first image shows that it passed all of the Java tests, otherwise the build would fail and it would say which test that failed.
+![Proof of tests](images/proofTests.PNG)
 
-Add link or something to show the test results
+
+This images shows that all webpage tests were passed successfully!
+![Proof of tests](images/proofTests2.PNG)
+
+### Test case relevancy.
+
+The test cases we have added tests for the following test requirements:
+
+- Color Space Conversion
+- ICC Profile Handling
+- Image Handling
+- Text and Background Conversion
 
 ## UML class diagram
 ![UML-klassdiagram](out/diagram/diagram.png)
