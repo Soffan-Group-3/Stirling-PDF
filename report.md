@@ -43,10 +43,10 @@ Below is a breakdown of the time each team member spent in different activities.
 1. plenary discussions/meetings; 2 h
 2. discussions within parts of the group; 2 h
 3. reading documentation; 4 h
-4. configuration and setup; 30 minutes
+4. configuration and setup; 4 h
 5. analyzing code/output; 5 h
 6. writing documentation; 2 h
-7. writing code; 5 h
+7. writing code; 1 h
 8. running code; 5 h
 
 ### Oskar
