@@ -30,44 +30,44 @@ Below is a breakdown of the time each team member spent in different activities.
 8. running code; 4 h
 
 ### Hanna
-1. plenary discussions/meetings;
-2. discussions within parts of the group;
-3. reading documentation;
-4. configuration and setup; 
-5. analyzing code/output;
-6. writing documentation;
-7. writing code;
-8. running code?
+1. plenary discussions/meetings; 2 h
+2. discussions within parts of the group; 2 h
+3. reading documentation; 4 h
+4. configuration and setup; 30 minutes
+5. analyzing code/output; 4.5 h
+6. writing documentation; 6 h
+7. writing code; 5 h
+8. running code? 4 h
 
 ### Janne
-1. plenary discussions/meetings;
-2. discussions within parts of the group;
-3. reading documentation;
-4. configuration and setup; 
-5. analyzing code/output;
-6. writing documentation;
-7. writing code;
-8. running code?
+1. plenary discussions/meetings; 2 h
+2. discussions within parts of the group; 2 h
+3. reading documentation; 4 h
+4. configuration and setup; 30 minutes
+5. analyzing code/output; 5 h
+6. writing documentation; 2 h
+7. writing code; 5 h
+8. running code; 5 h
 
 ### Oskar
-1. plenary discussions/meetings;
-2. discussions within parts of the group;
-3. reading documentation;
-4. configuration and setup; 
-5. analyzing code/output;
-6. writing documentation;
-7. writing code;
-8. running codeM
+1. plenary discussions/meetings; 2 h
+2. discussions within parts of the group; 2 h
+3. reading documentation; 4 h
+4. configuration and setup; 30 minutes
+5. analyzing code/output; 5 h
+6. writing documentation; 2 h
+7. writing code; 5 h
+8. running code; 5h 
 
 ### Pontus
-1. plenary discussions/meetings;
-2. discussions within parts of the group;
-3. reading documentation;
-4. configuration and setup; 
-5. analyzing code/output;
-6. writing documentation;
-7. writing code;
-8. running code?
+1. plenary discussions/meetings; 2 h
+2. discussions within parts of the group; 2 h
+3. reading documentation; 3 h
+4. configuration and setup; 30 minutes
+5. analyzing code/output; 4.5 h
+6. writing documentation; 5 h
+7. writing code; 5 h
+8. running code? 4 h
 
 ## Overview of issues and work done.
 
