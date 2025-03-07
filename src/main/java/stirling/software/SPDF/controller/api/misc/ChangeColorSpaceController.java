@@ -46,15 +46,10 @@ public class ChangeColorSpaceController {
         PDDocument document = pdfDocumentFactory.load(changeColorSpaceRequest);
         ICC_Profile icc =
                 changeColorSpaceService.loadICCProfile(changeColorSpaceRequest.getIccProfileName());
-        PDDocument modifiedDocument =
-                changeColorSpaceService.changeColorSpace(
-                        document, icc // Change this null into a real icc-profile
-                        );
+        PDDocument modifiedDocument = changeColorSpaceService.changeColorSpace(document, icc);
 
-        // Create a ByteArrayOutputStream to hold the modified PDF data
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-        // Save the modified PDF document to the output stream
         modifiedDocument.save(outputStream);
         modifiedDocument.close();
 
@@ -65,8 +60,6 @@ public class ChangeColorSpaceController {
                                 .replaceFirst("[.][^.]+$", "")
                         + "_updated_color_space.pdf";
 
-        // Return the modified PDF as a downloadable file
-        // Convert the byte array to a web response and return it
         return WebResponseUtils.bytesToWebResponse(outputStream.toByteArray(), mergedFileName);
     }
 }

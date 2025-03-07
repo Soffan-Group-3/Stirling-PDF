@@ -30,25 +30,20 @@ public class ChangeColorSpace {
             Object next = tokens.get(j);
             if (next instanceof Operator op) {
                 if ("rg".equals(op.getName()) || "RG".equals(op.getName())) {
-                    // Get values:
                     COSNumber r = (COSNumber) tokens.get(j - 3);
                     COSNumber g = (COSNumber) tokens.get(j - 2);
                     COSNumber b = (COSNumber) tokens.get(j - 1);
 
-                    // Convert values:
                     float[] rgb = {r.floatValue(), g.floatValue(), b.floatValue()};
                     float[] icc_color = isc.fromRGB(rgb);
 
-                    // Remove old color values
                     int size = newTokens.size();
                     newTokens.remove(size - 1);
                     newTokens.remove(size - 2);
                     newTokens.remove(size - 3);
                     size = newTokens.size();
 
-                    // Add new color values
                     if (icc_color.length == 4) {
-                        // Four values is for CMYK
                         newTokens.add(new COSFloat(icc_color[0]));
                         newTokens.add(new COSFloat(icc_color[1]));
                         newTokens.add(new COSFloat(icc_color[2]));
@@ -56,7 +51,6 @@ public class ChangeColorSpace {
                         String newOp = "rg".equals(op.getName()) ? "k" : "K";
                         newTokens.add(Operator.getOperator(newOp));
                     } else {
-                        // Three values is for RGB
                         newTokens.add(new COSFloat(icc_color[0]));
                         newTokens.add(new COSFloat(icc_color[1]));
                         newTokens.add(new COSFloat(icc_color[2]));

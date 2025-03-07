@@ -10,10 +10,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.pdfbox.contentstream.operator.Operator;
-import org.apache.pdfbox.cos.COSFloat;
 import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.cos.COSNumber;
 import org.apache.pdfbox.pdfparser.PDFStreamParser;
 import org.apache.pdfbox.pdfwriter.ContentStreamWriter;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -33,8 +30,6 @@ public class ChangeColorSpaceService {
     public ICC_Profile loadICCProfile(String profileName)
             throws IOException, FileNotFoundException {
 
-        // Change this to relative path for deployment
-        // Or should probably be made in a prettier way...
         String iccFilePath = "src/main/resources/static/" + profileName;
         ICC_Profile iccProfile = null;
         try (InputStream iccProfileStream = new FileInputStream(iccFilePath)) {
@@ -65,22 +60,16 @@ public class ChangeColorSpaceService {
      */
     public PDDocument changeColorSpaceImages(PDDocument document, ICC_Profile icc_profile)
             throws IOException {
-        // Iterate over each page in the PDF document
         for (PDPage page : document.getPages()) {
             PDResources resources = page.getResources();
-            // Collect the XObject names to remove
             List<COSName> namesToUpdate = new ArrayList<>();
 
-            // Iterate over all XObject names in the page's resources
             for (COSName name : resources.getXObjectNames()) {
-                // Check if the XObject is an image
                 if (resources.isImageXObject(name)) {
-                    // Collect the name for removal
                     namesToUpdate.add(name);
                 }
             }
 
-            // Now, modify the resources by removing the collected names
             for (COSName name : namesToUpdate) {
                 PDImageXObject old_img = (PDImageXObject) resources.getXObject(name);
                 PDImageXObject new_img =
@@ -110,7 +99,7 @@ public class ChangeColorSpaceService {
         for (PDPage page : document.getPages()) {
             PDFStreamParser parser = new PDFStreamParser(page);
             List<Object> tokens = parser.parse();
-            ChangeColorSpace.changeRGBtoCMYK(tokens, isc)
+            List<Object> newTokens = ChangeColorSpace.changeRGBtoCMYK(tokens, isc);
             PDStream updatedStream = new PDStream(document);
             OutputStream out = updatedStream.createOutputStream(COSName.FLATE_DECODE);
             ContentStreamWriter tokenWriter = new ContentStreamWriter(out);
