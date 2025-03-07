@@ -59,7 +59,8 @@ public class CompressController {
         this.pdfDocumentFactory = pdfDocumentFactory;
     }
 
-    private void compressImagesInPDF(Path pdfFile, double scaleFactor, float jpegQuality) throws Exception {
+    private void compressImagesInPDF(Path pdfFile, double scaleFactor, float jpegQuality)
+            throws Exception {
         byte[] fileBytes = Files.readAllBytes(pdfFile);
         long originalFileSize = fileBytes.length;
         log.info(
@@ -203,11 +204,13 @@ public class CompressController {
 
                     // Choose appropriate format and compression
                     String format = bufferedImage.getColorModel().hasAlpha() ? "png" : "jpeg";
-                    
-                    // First get the actual size of the original image by encoding it to the chosen format
+
+                    // First get the actual size of the original image by encoding it to the chosen
+                    // format
                     ByteArrayOutputStream originalImageStream = new ByteArrayOutputStream();
                     if (format.equals("jpeg")) {
-                        // Get the best available JPEG writer (prioritizes TwelveMonkeys if available)
+                        // Get the best available JPEG writer (prioritizes TwelveMonkeys if
+                        // available)
                         Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpeg");
                         ImageWriter writer = null;
 
@@ -365,7 +368,7 @@ public class CompressController {
             default -> 1.0; // No image scaling for levels 1-3
         };
     }
-    
+
     // New method for JPEG quality based on optimization level
     private float getJpegQualityForLevel(int optimizeLevel) {
         return switch (optimizeLevel) {
@@ -416,10 +419,10 @@ public class CompressController {
             boolean sizeMet = false;
             boolean imageCompressionApplied = false; // Track if we've already compressed images
             boolean qpdfCompressionApplied = false;
-            
+
             while (!sizeMet && optimizeLevel <= 9) {
                 // Apply appropriate compression based on level
-                
+
                 // Levels 4-9: Apply image compression
                 if (optimizeLevel >= 4 && !imageCompressionApplied) {
                     double scaleFactor = getScaleFactorForLevel(optimizeLevel);
@@ -427,12 +430,12 @@ public class CompressController {
                     compressImagesInPDF(tempInputFile, scaleFactor, jpegQuality);
                     imageCompressionApplied = true; // Mark that we've compressed images
                 }
-                
+
                 // All levels (1-9): Apply QPDF compression
                 if (!qpdfCompressionApplied) {
-                	long preQpdfSize = Files.size(tempInputFile);
-                	log.info("Pre-QPDF file size: {}", GeneralUtils.formatBytes(preQpdfSize));
-                	
+                    long preQpdfSize = Files.size(tempInputFile);
+                    log.info("Pre-QPDF file size: {}", GeneralUtils.formatBytes(preQpdfSize));
+
                     // For levels 1-3, map to qpdf compression levels 1-9
                     int qpdfCompressionLevel = optimizeLevel;
                     if (optimizeLevel <= 3) {
@@ -440,7 +443,7 @@ public class CompressController {
                     } else {
                         qpdfCompressionLevel = 9; // Max QPDF compression for levels 4-9
                     }
-                    
+
                     // Run QPDF optimization
                     List<String> command = new ArrayList<>();
                     command.add("qpdf");
@@ -472,9 +475,8 @@ public class CompressController {
                     double qpdfReduction = 100.0 - ((postQpdfSize * 100.0) / preQpdfSize);
                     log.info(
                             "Post-QPDF file size: {} (reduced by {:.1f}%)",
-                            GeneralUtils.formatBytes(postQpdfSize),
-                            qpdfReduction);
-                    
+                            GeneralUtils.formatBytes(postQpdfSize), qpdfReduction);
+
                 } else {
                     tempOutputFile = tempInputFile;
                 }
