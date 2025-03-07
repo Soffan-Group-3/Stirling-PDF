@@ -10,10 +10,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.pdfbox.contentstream.operator.Operator;
-import org.apache.pdfbox.cos.COSFloat;
 import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.cos.COSNumber;
 import org.apache.pdfbox.pdfparser.PDFStreamParser;
 import org.apache.pdfbox.pdfwriter.ContentStreamWriter;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -110,7 +107,7 @@ public class ChangeColorSpaceService {
         for (PDPage page : document.getPages()) {
             PDFStreamParser parser = new PDFStreamParser(page);
             List<Object> tokens = parser.parse();
-            ChangeColorSpace.changeRGBtoCMYK(tokens, isc)
+            List<Object> newTokens = ChangeColorSpace.changeRGBtoCMYK(tokens, isc);
             PDStream updatedStream = new PDStream(document);
             OutputStream out = updatedStream.createOutputStream(COSName.FLATE_DECODE);
             ContentStreamWriter tokenWriter = new ContentStreamWriter(out);
