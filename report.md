@@ -20,14 +20,14 @@ This project was much more simple to get working than the last project. The docu
 Below is a breakdown of the time each team member spent in different activities.
 
 ### Adam
-1. plenary discussions/meetings;
-2. discussions within parts of the group;
-3. reading documentation;
-4. configuration and setup; 
-5. analyzing code/output;
-6. writing documentation;
-7. writing code;
-8. running code;
+1. plenary discussions/meetings; 2 h
+2. discussions within parts of the group; 2 h
+3. reading documentation; 3 h
+4. configuration and setup; 30 minutes
+5. analyzing code/output; 4.5 h
+6. writing documentation; 5 h
+7. writing code; 5 h
+8. running code; 4 h
 
 ### Hanna
 1. plenary discussions/meetings;
