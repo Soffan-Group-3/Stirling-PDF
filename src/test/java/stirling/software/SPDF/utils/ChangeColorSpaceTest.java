@@ -3,32 +3,52 @@ package stirling.software.SPDF.utils;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.jupiter.api.Test;
+import java.awt.Graphics;
+import java.awt.color.ICC_Profile;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ErrorUtilsTest {
+import javax.imageio.ImageIO;
+
+import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.PDResources;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+import org.junit.jupiter.api.Test;
+import stirling.software.SPDF.service.ChangeColorSpaceService;
+
+import stirling.software.SPDF.service.ChangeColorSpaceService;
+
+public class ChangeColorSpaceTest {
 
     @Test
-    public void test_ChangeColorSpace(){
+    public void test_ChangeColorSpace() throws IOException{
+        ChangeColorSpaceService changeColorSpaceService = null;
 
         File tempFile = File.createTempFile("testCMYK-", "-image");
         String iccFilePath = "src/main/resources/static/Coated_Fogra39L_VIGC_300.icc";
-        ICC_Profile icc = ICC_Profile().getInstance(iccFilePath);
+        ICC_Profile icc = ICC_Profile.getInstance(iccFilePath);
         tempFile.deleteOnExit();
     
         BufferedImage image = new BufferedImage(6, 1, BufferedImage.TYPE_INT_RGB);
         Graphics g = image.getGraphics();
     
-        g.setColor(new java.awt.Color(1.0, 0.0, 0.0));
+        g.setColor(new java.awt.Color(255, 0, 0));
         g.fillRect(0, 0, 1, 1);
-        g.setColor(new java.awt.Color(0.0, 1.0, 0.0));
+        g.setColor(new java.awt.Color(0, 255, 0));
         g.fillRect(1, 0, 1, 1);
-        g.setColor(new java.awt.Color(0.0, 0.0, 1.0));
+        g.setColor(new java.awt.Color(0, 0, 255));
         g.fillRect(2, 0, 1, 1);
-        g.setColor(new java.awt.Color(1.0, 1.0, 0.0));
+        g.setColor(new java.awt.Color(255, 255, 0));
         g.fillRect(3, 0, 1, 1);
-        g.setColor(new java.awt.Color(1.0, 0.0, 1.0));
+        g.setColor(new java.awt.Color(255, 0, 255));
         g.fillRect(4, 0, 1, 1);
-        g.setColor(new java.awt.Color(0.0, 1.0, 1.0));
+        g.setColor(new java.awt.Color(0, 255, 255));
         g.fillRect(5, 0, 1, 1);
     
         try 
@@ -43,13 +63,13 @@ public class ErrorUtilsTest {
             PDPage page_temp = new PDPage();
             document.addPage(page_temp);
     
-            PDImageXObject testImage = PDImageXObject.createFromFile(tempFile, document);
+            PDImageXObject testImage = PDImageXObject.createFromFileByContent(tempFile, document);
     
             try (PDPageContentStream contentStream = new PDPageContentStream(document, page_temp)) {
-                contentStream.drawImage(pdImage, 0, 0, pdImage.getWidth(), pdImage.getHeight());
+                contentStream.drawImage(testImage, 0, 0, testImage.getWidth(), testImage.getHeight());
             }
     
-            PDDocument translated_document = changeColorSpaceImages(document, icc);
+            PDDocument translated_document = changeColorSpaceService.changeColorSpaceImages(document, icc);
     
             for (PDPage page : translated_document.getPages()) {
                 PDResources resources = page.getResources();
@@ -58,7 +78,7 @@ public class ErrorUtilsTest {
                 for (COSName name : resources.getXObjectNames()) {
                     if (resources.isImageXObject(name)) {
                         PDImageXObject img = (PDImageXObject) resources.getXObject(name);
-                        AssertEquals(4, img.getBitsPerComponent());
+                        assertEquals(4, img.getBitsPerComponent());
                         BufferedImage buf_img = img.getImage();
                         int[] red = {137, 70, 32};
                         int[] yellow = {249, 215, 154};
@@ -66,12 +86,12 @@ public class ErrorUtilsTest {
                         int[] blue = {0, 44, 69};
                         int[] green = {101, 112, 124};
                         int[] magenta = {60, 56, 52};
-                        AssertEquals(red, getRGBVals(buf_img.getRGB(0,0)));
-                        AssertEquals(yellow, getRGBVals(buf_img.getRGB(1,0)));
-                        AssertEquals(cyan, getRGBVals(buf_img.getRGB(2,0)));
-                        AssertEquals(blue, getRGBVals(buf_img.getRGB(3,0)));
-                        AssertEquals(green, getRGBVals(buf_img.getRGB(4,0)));
-                        AssertEquals(magenta, getRGBVals(buf_img.getRGB(5,0)));
+                        assertEquals(red, getRGBVals(buf_img.getRGB(0,0)));
+                        assertEquals(yellow, getRGBVals(buf_img.getRGB(1,0)));
+                        assertEquals(cyan, getRGBVals(buf_img.getRGB(2,0)));
+                        assertEquals(blue, getRGBVals(buf_img.getRGB(3,0)));
+                        assertEquals(green, getRGBVals(buf_img.getRGB(4,0)));
+                        assertEquals(magenta, getRGBVals(buf_img.getRGB(5,0)));
                     }
                 }
             }
